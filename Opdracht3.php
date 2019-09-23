@@ -11,11 +11,6 @@
  * Date: 23-9-2019
  * Time: 11:54
  */
-/*
-$boodschappen = ["aardappelen" , "aardbeien" , "3 pakken melk" , "yoghurt"];
-
-echo $boodschappen;
-*/
 
 
 $boodschappen = array("aardappelen", "aardbeien", "3 pakken melk", "yoghurt");

@@ -6,6 +6,26 @@
 </head>
 <body>
 <h2>Boodschappenlijst</h2>
+
+<form action="invullen.php" method="POST">
+    <table>
+        <tr> <!--Item form-->
+            <td><input type="text" name="item" placeholder="Item" required></td>
+        </tr>
+
+        <tr> <!--Aantal form-->
+            <td><input type="text" name="aantal" placeholder="Aantal" required></td>
+        </tr>
+
+        <tr> <!--Prijs form-->
+            <td><input type="text" name="prijs" placeholder="Prijs in Euro's" required></td>
+        </tr>
+
+        <tr> <!--Submit knop-->
+            <td><input type="submit" value="Versturen"></td>
+        </tr>
+    </table>
+</form>
 <p> <a href="table.php">Maak hier je lijstje aan</a></p>
 <p> <a href="invullen.php">Vul hier je items in</a></p>
 </body>

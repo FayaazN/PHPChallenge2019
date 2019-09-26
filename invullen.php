@@ -1,25 +1,55 @@
+
+
+
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "challenge";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'index.html';
+$item = $_POST['item'];
+$aantal = $_POST['aantal'];
+$prijs = $_POST['prijs'];
 
-$sql = "INSERT INTO Boodschappen (item, aantal, prijs)
-VALUES ('Melk', '3', '2 Euro')";
+if ( !empty($item) ||  !empty($aantal) ||  !empty($prijs) ) {
+    //Connectie invullen
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "challenge";
 
+    //Maak connectie
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->query($sql) === TRUE) {
-    echo "Boodschappen toegevoegd!";
+    if (mysqli_connect_error()) {
+        die("Connect Error(".mysqli_connect_errno().")". mysqli_connect_error());
+    } else {
+        $SELECT = "SELECT item  From boodschappen Where item = ? Limit 1";
+        $INSERT = "INSERT Into boodschappen (item, aantal, prijs) values(?, ?, ?)";
+        //Prepare statement
+        $stmt = $conn->prepare($SELECT);
+        $stmt->bind_param("s", $item);
+        $stmt->execute();
+        $stmt->bind_result($item);
+        $stmt->store_result();
+        $rnum = $stmt->num_rows;
+        if ($rnum==0) {
+            $stmt->close();
+            $stmt = $conn->prepare($INSERT);
+            $stmt->bind_param("sss", $item, $aantal, $prijs);
+            $stmt->execute();
+            echo "Boodschap toegevoegd!";
+        } else {
+            echo "Dit item staal al op het lijstje.";
+        }
+        $stmt->close();
+        $conn->close();
+    }
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "All field are required";
+    die();
 }
 
-$conn->close();
 ?>
+
+
+
+
+
